@@ -4,7 +4,7 @@
 #3.计算是否盈利
 #4.先对OKCoin进行交易，随后对HuoBi进行交易
 
-from websocket import create_connection
+import websocket
 import gzip
 import time
 
@@ -38,7 +38,7 @@ def getAdaPriceOfHuoBi(ws):
 if __name__ == '__main__':
     try:
         print("hello liuwenbin")
-        ws = create_connection("wss://api.huobi.pro/ws")
+        ws = websocket.create_connection("wss://api.huobi.pro/ws")
         print("hello jiejie")
     except :
         print('connect ws error,retry...')
