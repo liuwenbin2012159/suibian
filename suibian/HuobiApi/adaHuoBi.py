@@ -40,19 +40,20 @@ if __name__ == '__main__':
         print("hello liuwenbin")
         ws = websocket.create_connection("wss://api.huobi.pro/ws")
         print("hello jiejie")
+
+        tradeStr = """{"sub": "market.ethusdt.depth.step5", "id": "id10"}"""
+        # tradeStr = """{"sub":"market.ethusdt.detail","id":"id12"}"""
+        ws.send(tradeStr)
+        while (True):
+            compressData = ws.recv()
+            result = gzip.decompress(compressData).decode('utf-8')
+            print("RESULT==" + result)
+            ts = result[8:21]
+            pong = '{"ping":' + ts + '}'
+            ws.send(pong)
     except :
         print('connect ws error,retry...')
 
-    tradeStr = """{"sub": "market.ethusdt.depth.step5", "id": "id10"}"""
-    # tradeStr = """{"sub":"market.ethusdt.detail","id":"id12"}"""
-    ws.send(tradeStr)
-    while(True):
-        compressData=ws.recv()
-        result=gzip.decompress(compressData).decode('utf-8')
-        print("RESULT=="+result)
-        ts=result[8:21]
-        pong='{"ping":'+ts+'}'
-        ws.send(pong)
 
 
         # 订阅 KLine 数据
